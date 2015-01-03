@@ -752,6 +752,9 @@ static int traverse_header_fields(suunto_eonsteel_parser_t *eon, const char *nam
 	if (!strcmp(name, "Diving.Algorithm"))
 		return add_string(eon, "Deco algorithm", data);
 
+	if (!strcmp(name, "Diving.DiveMode"))
+		return add_string(eon, "Dive Mode", data);
+
 	return 0;
 }
 
@@ -796,6 +799,9 @@ static int traverse_fields(unsigned short type, const struct type_desc *desc, co
 		break;
 	case 0x000f: // Helium percentage in first byte
 		add_gas_he(eon, data[0]);
+		break;
+	case 0x0011: // Transmitter ID
+		add_string(eon, "Transmitter ID", data);
 		break;
 	default:
 	// The types with the high byte set seem to be dynamic
