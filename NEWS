@@ -1,0 +1,168 @@
+Version 0.4.0 (2013-05-13)
+==========================
+
+The v0.4.0 release is mainly a bugfix release, and brings in support for a
+number of new devices. There are also two minor backwards incompatible changes,
+but most applications won't be affected by those.
+
+New features:
+
+ * Add support for the Heinrichs Weikamp OSTC3.
+ * Add support for the native Shearwater Petrel protocol.
+ * Add support for retrieving the transport type.
+
+Removed/changed features:
+
+ * The Shearwater Predator dive data format has been modified to include the
+   final block at the end of each dive. The parser retains support for the old
+   data format.
+ * The mares_iconhd_extract_dives function now requires a valid device handle.
+
+Bug fixes:
+
+ * [atom2] Fix temperature and tank pressure for the Tusa Element II.
+ * [atom2] Add support for yet another Oceanic OC1 variant.
+ * [iconhd] Limit the memory capacity to 256K.
+ * [d9] Add support for the Suunto DX.
+ * [d9] Prevent an infinite loop.
+ * [misc] Use a new xml element for the gaschange events.
+ * [misc] Add a root element to the xml output.
+ * [misc] Update the msvc project file.
+ * [misc] Exclude device descriptors for unsupported devices.
+ * [misc] Update the README with the new domain name.
+ * [frog] Fix the gas change events for the Heinrichs Weikamp Frog.
+ * [iconhd] Fix the parsing of the gas mixes.
+ * [leonardo] Add a devinfo event containing the serial number.
+ * [leonardo] Flush the serial buffers after opening the port.
+ * [leonardo] Fix a potential NULL pointer dereference.
+ * [atom2] Add support for the Genesis React Pro White
+ * [veo250] Fix the temperature and year for the Genesis React Pro.
+ * [veo250] Fix the sample rate for the Genesis React Pro.
+ * [misc] Add additional descriptors for Uwatec devices.
+ * [predator] Fix time conversion for Shearwater computers
+ * [misc] Add support for the Mares Nemo Steel and Titanium.
+ * [atom2] Add support for the Oceanic Pro Plus 3.
+ * [smart] Fix the decoding of negative temperatures.
+ * [misc] Re-order the decostop array to match the enum values.
+ * [vtpro] Add support for the Aeris Atmos 2.
+ * [vtpro] Add support for the Aeris Elite.
+
+Version 0.3.0 (2013-02-06)
+==========================
+
+The v0.3.0 release introduces some interesting features for technical divers,
+support for a number of new devices and many smaller bugfixes.
+
+There have been a few minor changes to the public interface, to remove a few
+deprecated functions. Therefore this release is not completely backwards
+compatible with the previous release. However, most applications won't be
+affected by these changes.
+
+New features:
+
+ * Add support for the Cressi Leonardo.
+ * Add support for the Mares Nemo Wide 2, Matrix and Puck Pro.
+ * Add support for the Shearwater Predator and Petrel.
+ * Add support for decostop / ndl samples
+ * Add support for setpoint, ppO2 and CNS
+ * Add support for salinity and atmospheric pressure
+ * Add a new gaschange2 event with O2 and He percentages.
+ * Add a new vendor event.
+ * Add some missing size macros.
+ * Add timestamps to the default log function.
+ * Include the git commit SHA1 in the version number.
+
+Removed/changed features:
+
+ * Remove the suunto_vyper_device_set_delay function.
+ * Remove the reefnet_sensusultra_device_set_maxretries function.
+ * Remove the xxx_device_set_timestamp functions.
+ * Remove the uwatec_smart_device_version function.
+ * Remove the dc_device_version function.
+ * Remove the page, packet and memory size macros from the public api.
+ * Add a model parameter to the mares_iconhd_device_open function.
+
+Bug fixes:
+
+ * [d9] Fix the fingerprint offset for the Suunto D4i, D6i and D9tx.
+ * [d9] Add support for the new D6i firmware.
+ * [veo250] Add support for the Seemann XP5.
+ * [atom2] Add support for a second Aeris Elite T3 variant.
+ * [atom2] Fix the tank pressure decoding for the Hollis DG03.
+ * [vtpro] Fix the unit conversion for the max depth.
+ * [iconhd] Decode the serial number as a 32 bit number.
+ * [suunto] Fix the decoding of the Suunto serial numbers.
+ * [d9] Add support for trimix gas changes.
+ * [cobalt] Add gas changes and violation events for Atomic Aquatics Cobalt
+ * [ostc] Fix gas handling for OSTC
+ * [misc] Log the date/time and version in the example applications.
+ * [puck] Add a small delay before retrying a packet.
+ * [misc] Update the msvc project file.
+ * [vyper2] Read the version info when opening the connection.
+ * [atom2] Fix a typo in the Sherwood Wisdom 3 model number.
+ * [misc] Fix a redefinition warning for the ERROR macro.
+ * [ostc] Skip the size validation for unused divisors.
+ * [atom2] Add support for the Aeris A300 AI.
+ * [ostc] Autodetect the three OSTC variants.
+ * [ostc] Fix a regression in the depth calculation.
+ * [atom2] Add support for a second Sherwood Insight variant.
+ * [ostc] This adds support for a subset of the events the OSTC provides.
+ * [ostc] Correct the OSTC depth calculation
+ * [atom2] Add support for a second Aeris Epic variant.
+ * [atom2] Fix the parser for the Hollis DG03.
+
+Version 0.2.0 (2012-09-21)
+==========================
+
+The v0.2.0 release marks the first step towards a redesign of the public
+interface. The major highlights of this release are the introduction of
+a namespace prefix, the device enumeration support, and a much more
+flexible logging system.
+
+Please note that the public interface has changed significantly, and
+therefore this release is NOT backwards compatible with the previous
+release. Applications will have to be updated to support the new
+features!
+
+New features:
+
+ * Add support for the Heinrichs Weikamp Frog.
+ * Separate private and public headers.
+ * Use common status codes for the device and parser layers.
+ * Use a common backend type for the device and parser layers.
+ * Introduce a namespace prefix for the high-level public api.
+ * Add the device enumeration support.
+ * Add a dc_device_open convenience function.
+ * Add a dc_parser_new convenience function.
+ * Add a new library context object.
+ * Add support for an application defined logging function.
+ * Add an option to disable the logging.
+ * Add an option to enable support for pseudo terminals.
+
+Bug fixes:
+
+ * [d9] Enable the model hint to speedup the autodetection.
+ * [ostc] Add support for eeprom bank number 2.
+ * [iconhd] Fix the detection of the last dive.
+ * [d9] Fix the profile ringbuffer end.
+ * [misc] Fix a build error with automake 1.12 or newer.
+ * [serial] Fix some ioctl calls on 64bit Mac OS X.
+ * [cobalt] Fix the libusb timeout handling.
+ * [atom2] Add support for the Aeris Manta.
+ * [irda] Remove the IrDA init and cleanup functions.
+ * [serial] Enable exclusive access mode.
+ * [atom2] Add support for the Oceanic OCS.
+ * [frog] Finish immediately if there are no dives available.
+ * [frog] Verify the header in the logbook and profile are identical.
+ * [atom2] Fixed date parsing for Oceanic VEO 3.0
+ * [smart] Add support for the Uwatec Galileo Trimix.
+ * [vyper] Don't exceed the maximum number of bytes.
+ * [d9] Fix the gas mix parsing.
+ * [d9] Take the gas model into account to parse the gas mixes.
+ * [misc] Update the list with supported models.
+ * [misc] Update the msvc project file.
+
+Version 0.1.0 (2012-04-27)
+==========================
+
+First release.
