@@ -52,6 +52,8 @@ typedef struct dc_serial_t {
 	const dc_serial_operations_t *ops;		//reference to a custom set of operations
 } dc_serial_t;
 
+void serial_init(dc_serial_t *device, void *data, const dc_serial_operations_t *ops);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
