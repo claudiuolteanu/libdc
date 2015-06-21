@@ -26,6 +26,7 @@
 #include "device.h"
 #include "parser.h"
 #include "buffer.h"
+#include "custom_serial.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,6 +43,9 @@ typedef enum hw_ostc_format_t {
 
 dc_status_t
 hw_ostc_device_open (dc_device_t **device, dc_context_t *context, const char *name);
+
+dc_status_t
+hw_ostc_device_open2 (dc_device_t **device, dc_context_t *context, dc_serial_t *serial);
 
 dc_status_t
 hw_ostc_device_md2hash (dc_device_t *device, unsigned char data[], unsigned int size);

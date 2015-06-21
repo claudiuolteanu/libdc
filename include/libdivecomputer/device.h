@@ -27,6 +27,7 @@
 #include "descriptor.h"
 #include "buffer.h"
 #include "datetime.h"
+#include "custom_serial.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -71,6 +72,9 @@ typedef int (*dc_dive_callback_t) (const unsigned char *data, unsigned int size,
 
 dc_status_t
 dc_device_open (dc_device_t **out, dc_context_t *context, dc_descriptor_t *descriptor, const char *name);
+
+dc_status_t
+dc_device_custom_open (dc_device_t **out, dc_context_t *context, dc_descriptor_t *descriptor, dc_serial_t *serial);
 
 dc_family_t
 dc_device_get_type (dc_device_t *device);
