@@ -20,11 +20,61 @@
  */
 
 #include <libdivecomputer/custom_serial.h>
+#include <serial.h>
+
+#include "context-private.h"
+
+const dc_serial_operations_t native_serial_ops = {
+	.open = serial_open,
+	.close = serial_close,
+	.read = serial_read,
+	.write = serial_write,
+	.flush = serial_flush,
+	.get_received = serial_get_received,
+	.get_transmitted = serial_get_transmitted
+};
+
 
 void
-serial_init(dc_serial_t *device, void *data, const dc_serial_operations_t *ops)
+dc_serial_init (dc_serial_t *serial, void *data, const dc_serial_operations_t *ops)
 {
-	memset(device, 0, sizeof (*device));
-    device->data = data;
-    device->ops = ops;
+	memset (serial, 0, sizeof (*serial));
+	serial->data = data;
+	serial->ops = ops;
+}
+
+
+dc_status_t
+dc_serial_native_open(dc_serial_t **out, dc_context_t *context, const char *devname)
+{
+	if (out == NULL)
+		return DC_STATUS_INVALIDARGS;
+
+	// Allocate memory.
+	dc_serial_t *serial = (dc_serial_t *) malloc (sizeof (dc_serial_t));
+
+	if (serial == NULL) {
+		ERROR (context, "Failed to allocate memory.");
+		return DC_STATUS_NOMEMORY;
+	}
+
+	serial_t *port;
+
+	// Open the serial device.
+	int rc = serial_open (&port, context, devname);
+	if (rc == -1) {
+		ERROR (context, "Failed to open the serial port.");
+		free (serial);
+		return DC_STATUS_IO;
+	}
+
+	// Initialize data and function pointers
+	dc_serial_init(serial, port, &native_serial_ops);
+
+	// Set the type of the device
+	serial->type = DC_TRANSPORT_SERIAL;
+
+	*out = serial;
+
+	return DC_STATUS_SUCCESS;
 }
