@@ -329,7 +329,7 @@ hw_ostc3_device_open2 (dc_device_t **out, dc_context_t *context, dc_serial_t *se
 
 	if (serial->type == DC_TRANSPORT_SERIAL) {
 		// Set the serial communication protocol (115200 8N1).
-		rc = serial_configure (device->serial->data, 115200, 8, SERIAL_PARITY_NONE, 1, SERIAL_FLOWCONTROL_NONE);
+		int rc = serial_configure (device->serial->data, 115200, 8, SERIAL_PARITY_NONE, 1, SERIAL_FLOWCONTROL_NONE);
 		if (rc == -1) {
 			ERROR (context, "Failed to set the terminal attributes.");
 			device->serial->ops->close (device->serial->data);

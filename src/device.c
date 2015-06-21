@@ -189,7 +189,7 @@ dc_device_custom_open (dc_device_t **out, dc_context_t *context, dc_descriptor_t
 		rc = hw_ostc_device_open2 (&device, context, serial);
 		break;
 	case DC_FAMILY_HW_OSTC3:
-		rc = hw_ostc3_device_open2 (&device, context, name);
+		rc = hw_ostc3_device_open2 (&device, context, serial);
 		break;
 	default:
 		return DC_STATUS_INVALIDARGS;
