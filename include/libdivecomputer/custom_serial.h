@@ -23,6 +23,7 @@
 #define CUSTOM_SERIAL_H
 
 #include <string.h>
+#include <stdlib.h>
 
 #include "context.h"
 #include "descriptor.h"
@@ -53,6 +54,8 @@ typedef struct dc_serial_t {
 } dc_serial_t;
 
 void serial_init(dc_serial_t *device, void *data, const dc_serial_operations_t *ops);
+
+dc_status_t dc_serial_native_open(dc_serial_t **serial, dc_context_t *context, const char *devname);
 
 #ifdef __cplusplus
 }
