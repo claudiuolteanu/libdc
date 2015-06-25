@@ -36,7 +36,7 @@ typedef struct serial_t serial_t;
 typedef struct dc_serial_operations_t
 {
 	//TODO in the end serial_t should be replaced with  dc_serial_t
-	int (*open) (serial_t **device, dc_context_t *context);
+	int (*open) (serial_t **device, dc_context_t *context, const char *name);
 	int (*close) (serial_t *device);
 	int (*read) (serial_t *device, void* data, unsigned int size);
 	int (*write) (serial_t *device, const void* data, unsigned int size);
