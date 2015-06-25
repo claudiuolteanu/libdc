@@ -26,6 +26,7 @@
 #include "device.h"
 #include "parser.h"
 #include "buffer.h"
+#include "custom_serial.h"
 
 #ifdef __cplusplus
 extern "C" {
