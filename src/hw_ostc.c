@@ -176,6 +176,56 @@ hw_ostc_device_open (dc_device_t **out, dc_context_t *context, const char *name)
 	return DC_STATUS_SUCCESS;
 }
 
+dc_status_t
+hw_ostc_device_custom_open (dc_device_t **out, dc_context_t *context, dc_serial_t *serial)
+{
+	if (out == NULL)
+		return DC_STATUS_INVALIDARGS;
+
+	// Allocate memory.
+	hw_ostc_device_t *device = (hw_ostc_device_t *) malloc (sizeof (hw_ostc_device_t));
+	if (device == NULL) {
+		ERROR (context, "Failed to allocate memory.");
+		return DC_STATUS_NOMEMORY;
+	}
+
+	// Initialize the base class.
+	device_init (&device->base, context, &hw_ostc_device_vtable);
+
+	// Set the default values.
+	memset (device->fingerprint, 0, sizeof (device->fingerprint));
+
+	// Set the serial reference
+	device->serial = serial;
+
+	if (serial->type == DC_TRANSPORT_SERIAL) {
+		// Set the serial communication protocol (115200 8N1).
+		int rc = serial_configure (serial->data, 115200, 8, SERIAL_PARITY_NONE, 1, SERIAL_FLOWCONTROL_NONE);
+		if (rc == -1) {
+			ERROR (context, "Failed to set the terminal attributes.");
+			serial->ops->close (serial->data);
+			free (device);
+			return DC_STATUS_IO;
+		}
+	}
+
+	// Set the timeout for receiving data.
+	if (serial_set_timeout (serial->data, 4000) == -1) {
+		ERROR (context, "Failed to set the timeout.");
+		serial->ops->close (serial->data);
+		free (device);
+		return DC_STATUS_IO;
+	}
+
+	// Make sure everything is in a sane state.
+	serial_sleep (serial->data, 100);
+	serial->ops->flush (serial->data, SERIAL_QUEUE_BOTH);
+
+	*out = (dc_device_t*) device;
+
+	return DC_STATUS_SUCCESS;
+}
+
 
 static dc_status_t
 hw_ostc_device_close (dc_device_t *abstract)
