@@ -42,6 +42,8 @@ typedef struct dc_serial_operations_t
 	int (*read) (serial_t *device, void* data, unsigned int size);
 	int (*write) (serial_t *device, const void* data, unsigned int size);
 	int (*flush) (serial_t *device, int queue);
+	int (*get_received) (serial_t *device);
+	int (*get_transmitted) (serial_t *device);
 } dc_serial_operations_t;
 
 typedef struct dc_serial_t {
