@@ -34,7 +34,7 @@ const dc_serial_operations_t native_serial_ops = {
 
 
 void
-serial_init(dc_serial_t *device, void *data, const dc_serial_operations_t *ops)
+dc_serial_init(dc_serial_t *device, void *data, const dc_serial_operations_t *ops)
 {
 	memset(device, 0, sizeof (*device));
 	device->data = data;
@@ -67,7 +67,7 @@ dc_serial_native_open(dc_serial_t **out, dc_context_t *context, const char *devn
 	}
 
 	// Initialize data and function pointers
-	serial_init(serial_device, port, &native_serial_ops);
+	dc_serial_init(serial_device, port, &native_serial_ops);
 
 	// Set the type of the device
 	serial_device->type = DC_TRANSPORT_SERIAL;
