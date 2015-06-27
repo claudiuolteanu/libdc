@@ -310,7 +310,7 @@ hw_ostc3_device_open (dc_device_t **out, dc_context_t *context, const char *name
 dc_status_t
 hw_ostc3_device_custom_open (dc_device_t **out, dc_context_t *context, dc_serial_t *serial)
 {
-	if (out == NULL)
+	if (out == NULL || serial == NULL || serial->port == NULL)
 		return DC_STATUS_INVALIDARGS;
 
 	// Allocate memory.
