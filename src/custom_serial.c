@@ -59,6 +59,9 @@ dc_serial_native_open(dc_serial_t **out, dc_context_t *context, const char *devn
 		return DC_STATUS_NOMEMORY;
 	}
 
+	// Initialize data and function pointers
+	dc_serial_init(serial_device, NULL, &native_serial_ops);
+
 	// Open the serial device.
 	int rc = serial_open (&serial_device->port, context, devname);
 	if (rc == -1) {
@@ -66,9 +69,6 @@ dc_serial_native_open(dc_serial_t **out, dc_context_t *context, const char *devn
 		free (serial_device);
 		return DC_STATUS_IO;
 	}
-
-	// Initialize data and function pointers
-	dc_serial_init(serial_device, NULL, &native_serial_ops);
 
 	// Set the type of the device
 	serial_device->type = DC_TRANSPORT_SERIAL;
